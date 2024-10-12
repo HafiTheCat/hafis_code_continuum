@@ -11,6 +11,8 @@ command = "npm run abridge -- '--drafts --base-url https://hafis-code-continuum.
 [[headers]]
   for = "/*"
   [headers.values]
+    Access-Control-Allow-Origin = "https://blog.hafi.is-a.dev"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
