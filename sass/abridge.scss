@@ -1627,3 +1627,9 @@ $coderoundhighlight: false !default;//round corners on highlighted code blocks
   scrollbar-color: #555 #222; /* Thumb and track color */
   scrollbar-width: thin; /* Make the scrollbar smaller */
 }
+
+.logostyle {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25em;
+}

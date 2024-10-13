@@ -43,7 +43,7 @@
         <big><a href="{{ get_url(path="/", lang=lang) }}{%- if uglyurls -%}
         {%- if lang == config.default_language -%}/{%- endif -%}
         index.html{%- endif -%}" title="{{config.title}}">
-        <div style="display: flex; flex-direction: row; gap: 0.25em">
+        <div class="logostyle">
         {{ config.extra.textlogo | safe }}
         {{ config.extra.logotext | safe }}
       </div>
