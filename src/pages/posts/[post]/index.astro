@@ -1,0 +1,19 @@
+---
+import { getPathsForSinglePostsAndMultiPostPartOnes } from "@scripts/SlugDef";
+export const getStaticPaths = getPathsForSinglePostsAndMultiPostPartOnes;
+
+const { post } = Astro.params;
+
+const mutli_part_post = await getEntry("docs", `posts/${post}/part-1`);
+
+// if its a single post we do not want to redirect to /part-1
+if (mutli_part_post?.data.slug !== undefined) {
+	// Multipost gets redirected
+	return Astro.redirect(`/posts/${post}/part-1/`, 307);
+}
+
+import PostWrapper from "@layouts/PostWrapper.astro";
+import { getEntry } from "astro:content";
+---
+
+<PostWrapper id={`posts/${post}/`} />;

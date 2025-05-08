@@ -1,0 +1,17 @@
+---
+import { DESCRIPTIONS, LABELS, SLUGS, TITLES } from "@/consts";
+import IndexPage from "@layouts/IndexPage.astro";
+import { Aside } from "@astrojs/starlight/components";
+import { Post } from "@/scripts/post-utils/Post";
+
+const posts = await Post.retrieveWithMultiPosts();
+---
+
+<IndexPage title={TITLES.post_index} entries={posts}>
+	<div slot="header">
+		<Aside title={LABELS.looking_for_part_index}>
+			<a href={SLUGS.parts}>{LABELS.click_me}</a>
+		</Aside>
+		<h1>{DESCRIPTIONS.post_index}</h1>
+	</div>
+</IndexPage>

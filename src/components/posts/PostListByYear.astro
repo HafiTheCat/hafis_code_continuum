@@ -1,0 +1,20 @@
+---
+import SmallPostList from "./SmallPostList.astro";
+import type {  PostsPerYear } from "@/scripts/post-utils/PostsPerYear";
+
+type Props = {
+	entries: PostsPerYear;
+};
+
+const { entries } = Astro.props;
+
+---
+
+{
+	Array.from(entries.posts.entries()).map(([year, entries]) =>
+		<h2 id={year.toString()}>
+			{year} <i class="text-xl text-[var(--sl-color-text-accent)]">&nbsp;{entries.amount} posts</i>
+		</h2>
+		<SmallPostList entries={entries.sidebarEntriesBasic}/>
+	)
+}

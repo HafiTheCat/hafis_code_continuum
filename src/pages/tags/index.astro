@@ -1,0 +1,22 @@
+---
+import MainPage from "@layouts/MainPage.astro";
+
+import { tag_definition, tagCategoriesWithUncategorized, TITLES, TOPICS } from "@/consts";
+import CategorizedTagList from "@components/tags/CategorizedTagList.astro";
+
+let frontmatter = {
+	title: TITLES.available_tags,
+    topic: TOPICS.tags,
+};
+
+const headings = tagCategoriesWithUncategorized.map((category) => ({
+	depth: 2,
+	text: category,
+	slug: category,
+}));
+
+---
+
+<MainPage frontmatter={frontmatter} headings={headings}>
+	<CategorizedTagList tagDef={tag_definition}/>
+</MainPage>

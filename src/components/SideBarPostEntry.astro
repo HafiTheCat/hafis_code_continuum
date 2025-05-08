@@ -1,0 +1,30 @@
+---
+import ArrowRight from "@assets/icons/arrow_right.svg";
+import type { PostInfo } from "@/scripts/post-utils/PostInfo";
+import type { PostsPerYear } from "@/scripts/post-utils/PostsPerYear";
+import PostList from "./sidebar/PostList.astro";
+
+type Props = {
+	entries: PostsPerYear;
+	current?: PostInfo;
+};
+
+const { entries, current = null } = Astro.props;
+
+---
+
+<ul class="flex flex-col">
+	{
+		Array.from(entries.posts.entries()).map(([year, entries]) => (
+			<details class="group" open>
+				<summary class="list-none flex flex-row items-center justify-between cursor-pointer">
+					<bold class="font-bold">{year}</bold>
+					<span class="transition-transform duration-200 group-open:rotate-90">
+						<ArrowRight />
+					</span>
+				</summary>
+				<PostList entries={entries} current={current!}/>
+			</details>
+		))
+	}
+</ul>

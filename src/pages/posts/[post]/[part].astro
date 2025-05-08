@@ -1,0 +1,10 @@
+---
+import { getPathsForMultiPostsAndParts } from "@scripts/SlugDef";
+export const getStaticPaths = getPathsForMultiPostsAndParts;
+
+import PostWrapper from "@layouts/PostWrapper.astro";
+
+const { post, part } = Astro.params;
+---
+
+<PostWrapper id={`posts/${post}/${part}`} />;

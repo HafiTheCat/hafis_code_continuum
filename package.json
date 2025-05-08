@@ -1,23 +1,46 @@
 {
-  "name": "abridge-bundle",
-  "version": "2.0.0",
-  "description": "Abridge - set PWA cache files list, bundle and minify js",
-  "author": "Jake G <106644+Jieiku@users.noreply.github.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/Jieiku/abridge",
+  "name": "hcc",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "abridge": "node -e \"if ( require('fs').existsSync('./themes/abridge/package_abridge.js')) {require('fs').copyFileSync('./themes/abridge/package_abridge.js', './package_abridge.js')}\" && node package_abridge.js",
-    "offline": "npm run abridge -- offline",
-    "elasticlunrjava": "npm run abridge -- elasticlunrjava",
-    "elasticlunr": "npm run abridge -- elasticlunr",
-    "pagefind": "npm run abridge -- pagefind",
-    "tinysearch": "npm run abridge -- tinysearch"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "fast-toml": "^0.5.4",
-    "jsonminify": "^0.4.2",
-    "pagefind": "^1.1.0",
-    "replace-in-file": "^8.1.0",
-    "uglify-js": "^3.17.4"
+    "@astrojs/mdx": "^4.2.6",
+    "@astrojs/netlify": "^6.3.2",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.3.1",
+    "@astrojs/starlight": "^0.34.3",
+    "@astrojs/starlight-tailwind": "^4.0.1",
+    "@astrojs/svelte": "^7.0.13",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.3",
+    "astro": "^5.7.11",
+    "astro-breadcrumbs": "^3.3.1",
+    "astro-expressive-code": "^0.41.2",
+    "dayjs": "^1.11.13",
+    "katex": "^0.16.22",
+    "mdast-util-to-string": "^4.0.0",
+    "preact": "^10.26.5",
+    "reading-time": "^1.5.0",
+    "rehype-external-links": "^3.0.0",
+    "starlight-fullview-mode": "^0.2.3",
+    "starlight-heading-badges": "^0.5.0",
+    "starlight-image-zoom": "^0.12.0",
+    "starlight-kbd": "^0.2.0",
+    "starlight-links-validator": "^0.16.0",
+    "starlight-showcases": "^0.3.0",
+    "starlight-sidebar-topics": "^0.6.0",
+    "starlight-sidebar-topics-dropdown": "^0.5.1",
+    "starlight-toc-overview-customizer": "^0.1.0",
+    "svelte": "^5.28.1",
+    "tailwindcss": "^4.1.3",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "astro-themes": "^0.2.5"
   }
 }

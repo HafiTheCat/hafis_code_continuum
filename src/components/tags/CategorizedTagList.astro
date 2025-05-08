@@ -1,0 +1,22 @@
+---
+import TagList from "@components/tags/TagList.astro";
+import { tag_definition,type TagDef } from "@/consts";
+
+function renderTransform(): [string, string[]][] {
+    return Object.entries(tag_definition).map(([cat,tags]) => {
+        return [
+            cat,
+            tags.map((tag_def:TagDef)=> cat === "uncategorized"?`${tag_def.label}`:`${cat}/${tag_def.label}`)
+        ]
+    });
+}
+
+const categorized_tags = renderTransform();
+---
+
+{
+    categorized_tags.map(([cat,tags]) => (
+    <h2 id={cat}>{<a href={`${cat}/`} class="no-underline">{cat}</a>}</h2>
+        <TagList tags={tags.map((tag) => tag)} />
+    ))
+}

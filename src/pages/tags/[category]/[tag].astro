@@ -1,0 +1,50 @@
+---
+import {
+	getTagsFromCategory,
+	tag_definition,
+	TITLES,
+	TOPICS,
+} from "@/consts";
+import MainPage from "@layouts/MainPage.astro";
+import { getDoubleTagPaths } from "@scripts/utils";
+import TagList from "@/components/tags/TagList.astro";
+import SmallPostList from "@/components/posts/SmallPostList.astro";
+import { Post } from "@/scripts/post-utils/Post";
+export const getStaticPaths = getDoubleTagPaths;
+
+const { category, tag } = Astro.params;
+
+let frontmatter = {
+	title: TITLES.category_with_tag.replaceAll("${category}", category).replaceAll("${tag}", tag),
+	topic: TOPICS.tags,
+};
+
+const posts_with_tag = await Post.retrieveBasedOnTag(`${category}/${tag}`);
+---
+
+<MainPage
+	frontmatter={frontmatter}
+	headings={[
+		{
+			depth: 2,
+			text: "Tags within",
+			slug: "tags-within",
+		},
+		{
+			depth: 2,
+			text: "Posts",
+			slug: "post-list",
+		},
+	]}>
+	<h2 id="tags-within">Tags within</h2>
+	<TagList tags={getTagsFromCategory(category as keyof typeof tag_definition)} />
+	<h2 id="post-list">Posts</h2>
+	<SmallPostList
+		entries={posts_with_tag.posts.map(({ frontmatter }) => ({
+			id: frontmatter.slug!,
+			title: frontmatter.title,
+			href: `/${frontmatter.slug!}/`,
+			description: frontmatter.description!,
+		}))}
+	/>
+</MainPage>

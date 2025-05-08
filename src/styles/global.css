@@ -1,0 +1,53 @@
+/* @import "tailwindcss";
+@plugin '@tailwindcss/typography';
+@layer base, starlight, theme, components, utilities;
+
+@import '@astrojs/starlight-tailwind';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+:root[data-theme="light"] {
+	--sl-color-accent: #3b3585;
+	--sl-color-accent-low: #b1aede;
+	--sl-color-accent-high: #29255d;
+}
+
+:root[data-theme="dark"] {
+	--sl-color-accent: #3b3585;
+	--sl-color-accent-low: #3d3a6b;
+	--sl-color-accent-high: #9f9cf0;
+}
+
+starlight-toc a[href="#_top"] {
+	color: var(--sl-color-text-accent);
+} */
+
+/* @layer base theme, components, utilities; */
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+@import "@astrojs/starlight-tailwind";
+/* @layer reset, starlight; */
+
+/* @layer reset {
+	.starlight-quarantine, .starlight-quarantine * {
+	  all: unset;
+	}
+  } */
+
+/* @import "@astrojs/starlight-tailwind" layer(starlight); */
+
+:root[data-theme="light"] {
+	--sl-color-accent: #3b3585;
+	--sl-color-accent-low: #b1aede;
+	--sl-color-accent-high: #3B3585;
+}
+
+:root[data-theme="dark"] {
+	--sl-color-accent: #3b3585;
+	--sl-color-accent-low: #3d3a6b;
+	--sl-color-accent-high: #9f9cf0;
+}
+
+starlight-toc a[href="#_top"] {
+	color: var(--sl-color-text-accent);
+}

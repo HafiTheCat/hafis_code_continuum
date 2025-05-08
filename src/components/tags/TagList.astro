@@ -1,0 +1,30 @@
+---
+import { allTags, SLUGS } from "@/consts";
+import type { TagType } from "@/consts";
+import Tag from "@components/tags/Tag.astro";
+
+type Props = {
+	tags?: string[];
+	categorize_double_tags?: boolean;
+};
+
+let { tags: tags = [] } = Astro.props;
+let no_tags = tags.length === 0;
+
+if (no_tags) {
+	tags = allTags;
+}
+tags = tags.sort((a, b) => a.localeCompare(b));
+tags = [...tags.filter((tag) => tag.includes("/")), ...tags.filter((tag) => !tag.includes("/"))];
+---
+
+<ul class="flex flex-wrap gap-2">
+	{
+		tags &&
+			tags.map((tag) => (
+				<a href={`${SLUGS.tags}${tag}/`} rel="me">
+					<Tag label={tag as TagType} />
+				</a>
+			))
+	}
+</ul>

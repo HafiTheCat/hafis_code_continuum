@@ -1,0 +1,48 @@
+---
+import type { MultiPostPartSidebarEntry, Part } from "@/scripts/post-utils/Part";
+import type { PostInfo } from "@/scripts/post-utils/PostInfo";
+import type { SelectionMarker } from "@/scripts/post-utils/types";
+import Segment from "@assets/icons/segment.svg";
+
+type Props = {
+	part: Part;
+	current?: PostInfo;
+};
+
+const { part, current = null } = Astro.props;
+
+const _part = {
+	...part.getSidebarEntry<MultiPostPartSidebarEntry>(),
+	selected:
+		part.postInfo.post === current?.post &&
+		part.postInfo.part === current?.part &&
+		part.postInfo.part !== "part-1",
+} as MultiPostPartSidebarEntry & SelectionMarker;
+---
+
+<li class="marker:content-none">
+	<a href={_part.href} class="block w-full overflow-hidden whitespace-nowrap">
+		<div
+			class="flex items-center gap-2 p-1 rounded-md transition-colors border-b"
+			class:list={[
+				{
+					"border-b-2 border-b-[var(--sl-color-accent-high)] font-semibold text-[var(--sl-color-accent-high)]":
+						_part.selected,
+				},
+				{
+					"border-b-[var(--sl-color-hairline)] text-[var(--sl-color-text)] hover:border-b-[var(--sl-color-accent-high)]":
+						!_part.selected,
+				},
+			]}>
+			<div class="flex-shrink-0">
+				<Segment
+					class:list={[
+						{ "fill-[var(--sl-color-accent-high)]": _part.selected },
+						{ "fill-[var(--sl-color-text)]": !_part.selected },
+					]}
+				/>
+			</div>
+			<span class="flex-1 truncate">{_part.title}</span>
+		</div>
+	</a>
+</li>

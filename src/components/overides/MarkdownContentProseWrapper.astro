@@ -1,0 +1,12 @@
+---
+import Default from "@astrojs/starlight/components/MarkdownContent.astro";
+import Prose from "../Prose.astro";
+import ImageZoom from '@/../node_modules/starlight-image-zoom/components/ImageZoom.astro';
+---
+
+<ImageZoom />
+<Default>
+	<Prose>
+		<slot />
+	</Prose>
+</Default>

@@ -1,0 +1,34 @@
+---
+import "astro-breadcrumbs/breadcrumbs.css";
+import { Breadcrumbs } from "astro-breadcrumbs";
+import PartSelector from "@components/PartSelector.astro";
+import ContentNotice from "@/../node_modules/@astrojs/starlight/components/ContentNotice.astro";
+
+import HomeIcon from "@assets/icons/home_page.svg";
+import ArrowRight from "@assets/icons/arrow_right.svg";
+import { PostInfo } from "@/scripts/post-utils/PostInfo";
+import { getContentNotice } from "@/scripts/utils";
+
+import ReadTimeInfo from "../pagetitle/ReadTimeInfo.astro";
+import TagListView from "../pagetitle/TagListView.astro";
+import Title from "../pagetitle/Title.astro";
+
+const { readingTime, tags = [], slug, title } = Astro.locals.starlightRoute.entry.data;
+
+let postInfo = slug === undefined ? null : PostInfo.parse(slug);
+
+const content_notice = getContentNotice(tags);
+---
+
+<Breadcrumbs separatorAriaHidden={false}>
+	<HomeIcon slot="index" />
+	<ArrowRight slot="separator" />
+</Breadcrumbs>
+
+<div class="flex flex-col gap-4 items-center">
+	<Title title={title} />
+	{readingTime && <ReadTimeInfo readingTime={readingTime} />}
+	<TagListView tags={tags} />
+	{postInfo && (postInfo.isMultiPost || postInfo.isPart) && <PartSelector postInfo={postInfo} />}
+	{content_notice !== null && <ContentNotice icon="error" label={content_notice} />}
+</div>

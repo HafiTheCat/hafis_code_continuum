@@ -1,0 +1,20 @@
+---
+import { TITLES } from "@/consts";
+import { LinkCard } from "@astrojs/starlight/components";
+
+export type SmallPostListEntry = {
+	id: string;
+	href: string;
+	title: string;
+	description: string;
+};
+
+type Props = {
+	entries: SmallPostListEntry[];
+};
+
+const { entries = [] } = Astro.props;
+---
+
+{entries.length === 0 && <p>{TITLES.no_posts}</p>}
+{entries.length > 0 && entries.map((post) => <LinkCard {...post} id={post.href} />)}

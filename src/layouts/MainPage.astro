@@ -1,0 +1,16 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+
+const { frontmatter, headings} = Astro.props;
+
+frontmatter["date"] = frontmatter["date"] || "2025-04-17";
+
+let page_props = {
+	frontmatter,
+	headings,
+};
+---
+
+<StarlightPage {...page_props} >
+		<slot />
+</StarlightPage>

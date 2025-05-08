@@ -1,0 +1,47 @@
+---
+import { PostList as PostsAsList } from "@/scripts/post-utils/PostList";
+import PartEntry from "./PartEntry.astro";
+import SinglePostEntry from "./SinglePostEntry.astro";
+import { MultiPost } from "@/scripts/post-utils/MultiPost";
+import type { PostInfo } from "@/scripts/post-utils/PostInfo";
+import { Part } from "@/scripts/post-utils/Part";
+
+type Props = {
+	entries: PostsAsList;
+	current?: PostInfo;
+};
+
+const { entries, current = null } = Astro.props;
+
+const _entries = new PostsAsList(
+	await Promise.all(
+		entries.posts.map(async (entry) => {
+			if (entry.postInfo.isMultiPost && entry.postInfo.post === current?.post) {
+				const parts = await (entry as MultiPost).getParts();
+				(entry as MultiPost).parts = parts.posts.map((part) =>
+					new Part(part.frontmatter, part.postInfo)
+				);
+			}
+
+			return entry;
+		})
+	)
+);
+---
+
+{
+	_entries.amount > 0 &&
+		_entries.posts.map((entry) => (
+			<ul>
+				<SinglePostEntry entry={entry} current={current!} />
+
+				{entry.postInfo.isMultiPost && (
+					<ul class="pl-2">
+						{(entry as MultiPost).parts.map((part) => {
+							return <PartEntry part={part} current={current!}/>
+						})}
+					</ul>
+				)}
+			</ul>
+		))
+}

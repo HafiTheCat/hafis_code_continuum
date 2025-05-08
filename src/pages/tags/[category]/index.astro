@@ -1,0 +1,19 @@
+---
+import { getTagsFromCategory, tag_definition, TITLES, TOPICS } from "@/consts";
+import MainPage from "@layouts/MainPage.astro";
+import TagList from "@components/tags/TagList.astro";
+
+import { getCategoryPaths } from "@scripts/utils";
+export const getStaticPaths = getCategoryPaths;
+
+const { category } = Astro.params;
+
+let frontmatter = {
+	title: TITLES.category.replaceAll("${category}", category),
+	topic: TOPICS.posts,
+};
+---
+
+<MainPage frontmatter={frontmatter}>
+	<TagList tags={getTagsFromCategory(category as keyof typeof tag_definition)} />
+</MainPage>

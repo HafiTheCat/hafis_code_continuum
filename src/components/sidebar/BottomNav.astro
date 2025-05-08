@@ -1,0 +1,23 @@
+---
+import { LABELS, SLUGS } from "@/consts";
+import { LinkButton } from "@astrojs/starlight/components";
+
+import PolicyIcon from "@assets/icons/policy.svg";
+import AboutIcon from "@assets/icons/contact_page.svg";
+
+let { pathname: currentslug } = Astro.url;
+const urlMatchesPrivacy = currentslug === SLUGS.privacy;
+const urlMatchesAbout = currentslug === SLUGS.about;
+---
+
+<div
+	class="border-t font-semibold border-[var(--sl-color-hairline-shade)] flex gap-2 pt-4 justify-evenly">
+	<LinkButton href={SLUGS.privacy} variant={urlMatchesPrivacy ? "primary" : "secondary"}>
+		{LABELS.privacy}
+		<PolicyIcon fill={urlMatchesPrivacy ? "var(--sl-color-black)" : "var(--sl-color-text)"} />
+	</LinkButton>
+	<LinkButton href={SLUGS.about} variant={urlMatchesAbout ? "primary" : "secondary"}>
+		{LABELS.about}
+		<AboutIcon fill={urlMatchesAbout ? "var(--sl-color-black)" : "var(--sl-color-text)"} />
+	</LinkButton>
+</div>

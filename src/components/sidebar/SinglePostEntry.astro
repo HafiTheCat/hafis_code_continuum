@@ -1,0 +1,60 @@
+---
+import SinglePostIcon from "@assets/icons/single_post.svg";
+import MultiPostIcon from "@assets/icons/multi_post.svg";
+import { Post, type PostSidebarEntry } from "@/scripts/post-utils/Post";
+import type { PostInfo } from "@/scripts/post-utils/PostInfo";
+import type { SelectionMarker } from "@/scripts/post-utils/types";
+
+type Props = {
+	entry: Post;
+	current?: PostInfo;
+};
+
+const { entry, current = null } = Astro.props;
+
+const _entry = {
+	...entry.getSidebarEntry<PostSidebarEntry>(),
+	selected:
+		entry.postInfo.post === current?.post && entry.postInfo.part === current?.part
+} as PostSidebarEntry & SelectionMarker;
+---
+
+<li>
+	<a href={`${_entry.href}`} class="block w-full overflow-hidden whitespace-nowrap">
+		<div
+			class="flex items-center gap-2 p-1 pl-1 rounded-md border"
+			class:list={[
+				// selected state
+				{
+					"bg-[var(--sl-color-accent-high)] border-[var(--sl-color-accent-high)] text-white font-semibold":
+						_entry.selected,
+				},
+				// un-selected state
+				{
+					"hover:text-[var(--sl-color-accent-high)] border-0 text-[var(--sl-color-text)]":
+						!_entry.selected,
+				},
+			]}>
+			{
+				entry.postInfo.isSinglePost ? (
+					<SinglePostIcon
+						class="flex-shrink-0"
+						class:list={[
+							{ "fill-white": _entry.selected },
+							{ "fill-[var(--sl-color-text)]": !_entry.selected },
+						]}
+					/>
+				) : (
+					<MultiPostIcon
+						class="flex-shrink-0"
+						class:list={[
+							{ "fill-white": _entry.selected },
+							{ "fill-[var(--sl-color-text)]": !_entry.selected },
+						]}
+					/>
+				)
+			}
+			<span class="truncate flex-1">{_entry.title}</span>
+		</div>
+	</a>
+</li>

@@ -1,0 +1,31 @@
+---
+import { getTagClasses, getTagDescription } from "@/consts";
+import type { TagType } from "@/consts";
+
+type Props = {
+	label: TagType;
+	amount?: boolean;
+};
+let { label } = Astro.props;
+---
+
+<abbr title={getTagDescription(label)}
+	><span class:list={["sl-badge", "large", getTagClasses(label)]}>{label}</span></abbr
+>
+
+<style>
+	.large {
+		font-size: var(--sl-text-base);
+		padding: 0.225rem 0.45rem;
+	}
+	.sl-badge {
+		display: inline-block;
+		border: 1px solid var(--sl-color-border-badge);
+		border-radius: 0.25rem;
+		font-family: var(--sl-font-system-mono);
+		line-height: normal;
+		color: var(--sl-color-text-badge);
+		background-color: var(--sl-color-bg-badge);
+		overflow-wrap: anywhere;
+	}
+</style>

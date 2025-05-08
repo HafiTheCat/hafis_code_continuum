@@ -1,0 +1,25 @@
+---
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+import { PostList as ListOfPosts } from "@scripts/post-utils/PostList";
+import { TITLES } from "@/consts";
+
+type Props = {
+	entries: ListOfPosts;
+};
+const { entries } = Astro.props;
+---
+
+{entries.posts.length === 0 && <p>{TITLES.no_posts}</p>}
+{
+	entries.hasPosts && (
+		<CardGrid>
+			{entries.posts.map((post) => (
+				<LinkCard
+					title={post.frontmatter.title}
+					href={`${post.frontmatter.slug}/`}
+					description={post.frontmatter.description}
+				/>
+			))}
+		</CardGrid>
+	)
+}

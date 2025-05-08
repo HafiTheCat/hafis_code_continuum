@@ -1,0 +1,30 @@
+---
+import { getEntry, render } from "astro:content";
+import MainPage from "./MainPage.astro";
+
+type Props = {
+	id: string;
+};
+
+const { id } = Astro.props;
+
+// try to get single-post
+let _id = id;
+if (id.endsWith("/")) _id = id.slice(0, -1);
+let entry = await getEntry("docs", _id);
+if (entry === undefined) {
+	// try to get multi-post part-1
+	entry = await getEntry("docs", `${id}part-1`);
+}
+if (entry === undefined) throw new Error(`Post not found: ${entry}`);
+
+const { Content, headings, remarkPluginFrontmatter } = await render(entry);
+let frontmatter = {
+	...entry.data,
+	...remarkPluginFrontmatter,
+};
+---
+
+<MainPage frontmatter={frontmatter} headings={headings} data-pagefind-body>
+	<Content />
+</MainPage>

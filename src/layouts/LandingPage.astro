@@ -1,0 +1,65 @@
+---
+import MainPage from "./MainPage.astro";
+import { DESCRIPTIONS, HERO, SLUGS, TITLES } from "@/consts";
+import { post_filter } from "@scripts/utils";
+import hero_image_dark from "@assets/hcc_banner_dark.png";
+import hero_image_light from "@assets/hcc_banner_light.png";
+import TagList from "@components/tags/TagList.astro";
+import PostList from "@components/PostList.astro";
+import { LinkCard } from "@astrojs/starlight/components";
+import { Post } from "@/scripts/post-utils/Post";
+
+const posts = await Post.retrieveWithMultiPosts();
+
+let latest_post = posts.getLatestPosts(4);
+
+let frontmatter = {
+	template: "splash",
+	title: HERO.page_title,
+	hero: {
+		title: HERO.title,
+		tagline: HERO.tagline,
+		image: {
+			light: hero_image_light,
+			dark: hero_image_dark,
+		},
+		actions: [
+			{ text: HERO.call_to_action_label, link: SLUGS.posts, icon: "right-arrow" },
+			{
+				text: HERO.call_to_action_github_label,
+				link: "https://github.com/HafiTheCat/hafis_code_continuum",
+				icon: "external",
+				variant: "minimal",
+				attr: { rel: "me" },
+			},
+		],
+	},
+
+	banner: latest_post.hasPosts
+		? {
+				content: HERO.banner_content
+					.replaceAll("${title}", latest_post.firstPost!.frontmatter.title)
+					.replaceAll("${id}", latest_post.firstPost!.frontmatter.slug!),
+			}
+		: undefined,
+	prev: false,
+	next: false,
+	pagefind: false,
+};
+---
+
+<MainPage frontmatter={frontmatter}>
+	<h1>{TITLES.latest_posts}</h1>
+	<PostList entries={posts.getLatestPosts(4)} />
+
+	<h1>{TITLES.random_posts}</h1>
+	<PostList entries={posts.getRandomPosts(4)} />
+
+	<h1>{TITLES.browse}</h1>
+	<LinkCard title={TITLES.post_index} href={SLUGS.posts} description={DESCRIPTIONS.post_index} />
+	<LinkCard title={TITLES.part_index} href={SLUGS.parts} description={DESCRIPTIONS.part_index} />
+	<LinkCard title={TITLES.tag_index} href={SLUGS.tags} description={DESCRIPTIONS.tag_index} />
+
+	<h1>{TITLES.available_tags}</h1>
+	<TagList categorize_double_tags={false} />
+</MainPage>

@@ -1,0 +1,28 @@
+---
+import PostListByYear from "@components/posts/PostListByYear.astro";
+import MainPage from "./MainPage.astro";
+import { TOPICS } from "@/consts";
+import type { PostList } from "@/scripts/post-utils/PostList";
+import { PostsPerYear } from "@/scripts/post-utils/PostsPerYear";
+
+type Props = {
+	title: string;
+	entries: PostList;
+};
+
+const { title, entries } = Astro.props;
+
+const postsByYear = PostsPerYear.fromPostList(entries, (e) => new Date(e.frontmatter.date));
+
+const headings = postsByYear.headers;
+---
+
+<MainPage
+	frontmatter={{
+		title,
+		topic: TOPICS.posts,
+	}}
+	headings={headings}>
+	<slot name="header" />
+	<PostListByYear entries={postsByYear} />
+</MainPage>

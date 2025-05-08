@@ -1,0 +1,48 @@
+---
+import CustomSocialIcon, { type CustomIconNames } from "./CustomSocialIcon.astro";
+
+type Link = { icon: CustomIconNames; label: string; href: string };
+
+const links: Link[] = [
+	{ icon: "github", label: "GitHub", href: "https://github.com/HafiTheCat" },
+	{
+		icon: "spotify",
+		label: "Spotify",
+		href: "https://open.spotify.com/artist/2bWE9yVI7pH7kEKDwv8mnQ?si=cZcAvlTrS5a34acd1nzcSg",
+	},
+	{
+		icon: "rust-explorer",
+		label: "RustExplorer",
+		href: "https://www.rustexplorer.com/u/hafithecat",
+	},
+	{ icon: "youtube", label: "Youtube", href: "https://www.youtube.com/@HafiTheCat" },
+	{ icon: "discord", label: "Discord", href: "discord://discordapp.com/users/hafi_the_cat" },
+	{ icon: "html", label: "My Website", href: "https://hafi.is-a.dev" },
+	{ icon: "email", label: "Email", href: "mailto:ufq0x4vbq@mozmail.com" },
+	{ icon: "rss", label: "RSS", href: "/rss.xml" },
+];
+---
+
+{
+	links.length > 0 && (
+		<>
+			{links.map(({ label, href, icon }) => (
+				<a {href} rel="me" class="sl-flex">
+					<span class="sr-only">{label}</span>
+					<CustomSocialIcon name={icon} />
+				</a>
+			))}
+		</>
+	)
+}
+
+<style>
+	a {
+		color: var(--sl-color-text-accent);
+		padding: 0.5em;
+		margin: -0.5em;
+	}
+	a:hover {
+		opacity: 0.66;
+	}
+</style>

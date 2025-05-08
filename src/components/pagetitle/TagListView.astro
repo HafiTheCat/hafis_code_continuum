@@ -1,0 +1,21 @@
+---
+import { MAGIC_NUMBERS, LABELS } from "@/consts";
+import TagList from "../tags/TagList.astro";
+
+type Props = {
+	tags: string[];
+};
+
+const { tags } = Astro.props;
+---
+
+{
+	tags.length > 0 && (
+		<details
+			open={tags.length < MAGIC_NUMBERS.open_tag_details_threshold}
+			class="flex flex-col gap-2 items-center justify-end">
+			<summary>{LABELS.tags}</summary>
+			<TagList tags={tags} categorize_double_tags={false} />
+		</details>
+	)
+}

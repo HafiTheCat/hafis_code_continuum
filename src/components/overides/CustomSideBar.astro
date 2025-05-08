@@ -1,0 +1,38 @@
+---
+import TopicsDropdown from "starlight-sidebar-topics-dropdown/TopicsDropdown.astro";
+import { TITLES } from "@/consts";
+
+import SideBarPostEntry from "../SideBarPostEntry.astro";
+import BottomNav from "../sidebar/BottomNav.astro";
+import SidebarLayout from "../sidebar/SidebarLayout.astro";
+import PostList from "../sidebar/PostList.astro";
+import { Post } from "@/scripts/post-utils/Post";
+import { PostInfo } from "@/scripts/post-utils/PostInfo";
+import { PostsPerYear } from "@/scripts/post-utils/PostsPerYear";
+
+const posts = await Post.retrieveWithMultiPosts();
+
+const latest_posts = posts.getLatestPosts(4);
+
+const postType = PostInfo.parse(Astro.locals.starlightRoute.id);
+
+const postsPerYear = PostsPerYear.fromPostList(
+	posts,
+	(e) => new Date(e.frontmatter.date),
+	(a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+);
+
+---
+
+<SidebarLayout>
+	<TopicsDropdown slot="top" />
+	<Fragment slot="mid">
+		<h1 class="text-2xl font-bold mb-4">{TITLES.latest_posts}</h1>
+
+		<PostList entries={latest_posts} />
+		<h1 class="text-2xl font-bold mb-4 pt-4">{TITLES.all_posts}</h1>
+
+		<SideBarPostEntry entries={postsPerYear} current={postType!} />
+	</Fragment>
+	<BottomNav slot="bottom" />
+</SidebarLayout>

@@ -1,0 +1,41 @@
+---
+import { MultiPost } from "@/scripts/post-utils/MultiPost";
+import type { PostInfo } from "@/scripts/post-utils/PostInfo";
+
+type Props = {
+	postInfo: PostInfo;
+};
+
+const { postInfo } = Astro.props;
+const multi_post = await MultiPost.retrieveFromPostInfo(postInfo);
+
+if (multi_post === null) return;
+const parts = (await multi_post.getParts(true)).sidebarEntries(postInfo);
+
+---
+
+{
+	parts.length > 1 && (
+		<div class="flex flex-row gap-2 items-center justify-center dark:border-[var(--sl-color-hairline)] pt-8 w-full">
+			{parts.map((part, i) => (
+				<abbr class="no-underline" title={part.title}>
+					<a
+						href={`${part.href}`}
+						class:list={[
+							{
+								"bg-[var(--sl-color-accent-high)] border-[var(--sl-color-accent-high)] text-white":
+									part.selected,
+							},
+							{
+								"hover:bg-[var(--sl-color-hairline)] border-[var(--sl-color-hairline)]":
+									!part.selected,
+							},
+						]}
+						class={` cursor-pointer flex items-center justify-center text-2xl w-12 h-12 border-4 rounded-xl `}>
+						{i + 1}
+					</a>
+				</abbr>
+			))}
+		</div>
+	)
+}

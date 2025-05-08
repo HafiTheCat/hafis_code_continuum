@@ -1,0 +1,30 @@
+---
+import MainPage from "@layouts/MainPage.astro";
+
+import { getSingleTagsPaths } from "@scripts/utils";
+import { TITLES, TOPICS } from "@/consts";
+import { Post } from "@scripts/post-utils/Post";
+import SmallPostList from "@/components/posts/SmallPostList.astro";
+
+export const getStaticPaths = getSingleTagsPaths;
+
+const tag = Astro.params.tag as string;
+
+const posts_with_tag = await Post.retrieveBasedOnTag(tag);
+
+let frontmatter = {
+	title: TITLES.post_with_tag.replaceAll("${tag}", tag),
+	topic: TOPICS.tags,
+};
+---
+
+<MainPage frontmatter={frontmatter}>
+	<SmallPostList
+		entries={posts_with_tag.posts.map(({frontmatter}) => ({
+			id: frontmatter.slug!,
+			title: frontmatter.title,
+			href: `/${frontmatter.slug!}/`,
+			description: frontmatter.description!,
+		}))}
+	/>
+</MainPage>

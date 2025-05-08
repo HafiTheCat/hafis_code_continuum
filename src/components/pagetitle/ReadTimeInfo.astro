@@ -1,0 +1,13 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+
+type Props = {
+	readingTime: string;
+};
+const { readingTime } = Astro.props;
+---
+
+<div class="right-2 flex flex-row gap-2 items-center p-2 justify-end">
+	<Icon name="seti:clock" />
+	<span class="ml-2 text-md italic">{readingTime}</span>
+</div>

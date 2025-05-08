@@ -1,0 +1,11 @@
+---
+import type { CollectionEntry} from "astro:content";
+import { LinkCard } from "@astrojs/starlight/components";
+
+interface Props {
+	post: CollectionEntry<"docs">;
+}
+const { post } = Astro.props;
+---
+
+<LinkCard title={post.data.title} href={post.id} description={post.data.description} />
