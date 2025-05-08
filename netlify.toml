@@ -23,14 +23,6 @@ for = "/*"
 [headers.values]
 Content-Security-Policy = """
     default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval';
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' data: https:;
-    font-src 'self';
-    object-src 'none';
-    base-uri 'self';
-    form-action 'self';
-    frame-ancestors 'none';
     block-all-mixed-content;
     upgrade-insecure-requests;
 
@@ -44,6 +36,7 @@ Content-Security-Policy = """
 
     script-src-elem
       'self'
+      'unsafe-inline'
       https://hafis-code-continuum.netlify.app
       https://gc.zgo.at;
 
