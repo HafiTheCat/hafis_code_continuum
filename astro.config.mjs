@@ -43,7 +43,24 @@ export default defineConfig({
 			],
 		],
 	},
-
+	server: {
+		headers: {
+			//https://www.trevorlasn.com/blog/csp-headers-astro
+			"Content-Security-Policy": `
+			default-src 'self';
+			script-src 'self' 'unsafe-inline' 'unsafe-eval';
+			style-src 'self' 'unsafe-inline';
+			img-src 'self' data: https:;
+			font-src 'self';
+			object-src 'none';
+			base-uri 'self';
+			form-action 'self';
+			frame-ancestors 'none';
+			block-all-mixed-content;
+			upgrade-insecure-requests;
+		  `,
+		},
+	},
 	integrations: [
 		starlight({
 			editLink: {
@@ -199,9 +216,9 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 	},
-    image: {
-        domains: [],
-    },
+	image: {
+		domains: [],
+	},
 	adapter: netlify({
 		cacheOnDemandPages: true,
 	}),

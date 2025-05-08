@@ -1,122 +1,107 @@
 [build]
-  publish   = "dist"
-  command   = "npm run build"
+publish = "dist"
+command = "npm run build"
 
 [context.deploy-preview]
 command = "npm run build -- --drafts"
 
 [[headers]]
 for = "/*"
-  [headers.values]
-  # CORS
-  Access-Control-Allow-Origin       = "https://blog.hafi.is-a.dev"
-  Vary                               = "Origin"
-  # HSTS with preload
-  Strict-Transport-Security         = "max-age=63072000; includeSubdomains; preload"
-  # Frame & embedding
-  X-Frame-Options                   = "DENY"
-  # Content Security Policy (with reporting endpoint placeholder)
-  Content-Security-Policy           = """
-    default-src 'none';
-    base-uri 'self' https://hafis-code-continuum.netlify.app;
-    manifest-src 'self' https://hafis-code-continuum.netlify.app;
-    worker-src 'self' https://hafis-code-continuum.netlify.app;
-    form-action 'self' https://hafis-code-continuum.netlify.app;
-    connect-src 'self' https://hafis-code-continuum.netlify.app https://cdn.jsdelivr.net *.hyvor.com ws://*.hyvor.com;
-    script-src 'self' https://hafis-code-continuum.netlify.app talk.hyvor.com;
-    img-src 'self' data: https://hafis-code-continuum.netlify.app talk.hyvor.com cdn.cloudflare.com;
-    frame-src 'self' https://hafis-code-continuum.netlify.app www.youtube-nocookie.com player.vimeo.com streamable.com;
-    media-src 'self' data: https://hafis-code-continuum.netlify.app cdn.cloudflare.com www.youtube-nocookie.com player.vimeo.com;
-    font-src 'self' https://hafis-code-continuum.netlify.app cdn.cloudflare.com cdn.jsdelivr.net fonts.gstatic.com;
-    style-src 'self' https://hafis-code-continuum.netlify.app talk.hyvor.com cdn.cloudflare.com cdn.jsdelivr.net fonts.googleapis.com 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-p08VBe6m5i8+qtXWjnH/AN3klt1l4uoOLsjNn8BjdQo=';
-    upgrade-insecure-requests;
-    report-uri /csp-report-endpoint
-  """
-  # Referrer policy
-  Referrer-Policy                   = "strict-origin-when-cross-origin"
-  # Deprecated – removed in modern browsers (CSP covers XSS protection)
-  # X-XSS-Protection                  = "1; mode=block"
-  # Permissions Policy
-  Permissions-Policy                = "interest-cohort=(), accelerometer=(), ambient-light-sensor=(), battery=(), bluetooth=(), browsing-topics=(), camera=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), publickey-credentials-create=(), publickey-credentials-get=(), serial=(), storage-access=(), sync-xhr=(), usb=(), web-share=(), window-management=(), xr-spatial-tracking=()"
-  # Cross-Origin Isolation
-  Cross-Origin-Resource-Policy      = "same-origin"
-  Cross-Origin-Embedder-Policy      = "require-corp"
-  Cross-Origin-Opener-Policy        = "same-origin"
+[headers.values]
+# CORS
+Access-Control-Allow-Origin = "https://blog.hafi.is-a.dev"
+Vary = "Origin"
+# HSTS with preload
+Strict-Transport-Security = "max-age=63072000; includeSubdomains; preload"
+# Frame & embedding
+X-Frame-Options = "DENY"
+# Content Security Policy (with reporting endpoint placeholder)
+Content-Security-Policy = """Content-Security-Policy: default-src 'self' https://hafis-code-continuum.netlify.app data: https:; base-uri 'self'; block-all-mixed-content; upgrade-insecure-requests; script-src 'self' https://hafis-code-continuum.netlify.app 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://hafis-code-continuum.netlify.app talk.hyvor.com cdn.cloudflare.com cdn.jsdelivr.net fonts.googleapis.com 'unsafe-inline' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-p08VBe6m5i8+qtXWjnH/AN3klt1l4uoOLsjNn8BjdQo='; img-src 'self' data: https://hafis-code-continuum.netlify.app talk.hyvor.com cdn.cloudflare.com; font-src 'self' https://hafis-code-continuum.netlify.app cdn.cloudflare.com cdn.jsdelivr.net fonts.gstatic.com; frame-src 'self' https://hafis-code-continuum.netlify.app www.youtube-nocookie.com player.vimeo.com streamable.com; media-src 'self' data: https://hafis-code-continuum.netlify.app cdn.cloudflare.com www.youtube-nocookie.com player.vimeo.com; object-src 'none'; manifest-src 'self' https://hafis-code-continuum.netlify.app; worker-src 'self' https://hafis-code-continuum.netlify.app; form-action 'self' https://hafis-code-continuum.netlify.app; frame-ancestors 'none'; report-uri /csp-report-endpoint"""
+# Referrer policy
+Referrer-Policy = "strict-origin-when-cross-origin"
+# Deprecated – removed in modern browsers (CSP covers XSS protection)
+# X-XSS-Protection                  = "1; mode=block"
+# Permissions Policy
+Permissions-Policy = "interest-cohort=(), accelerometer=(), ambient-light-sensor=(), battery=(), bluetooth=(), browsing-topics=(), camera=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), publickey-credentials-create=(), publickey-credentials-get=(), serial=(), storage-access=(), sync-xhr=(), usb=(), web-share=(), window-management=(), xr-spatial-tracking=()"
+# Cross-Origin Isolation
+Cross-Origin-Resource-Policy = "same-origin"
+Cross-Origin-Embedder-Policy = "require-corp"
+Cross-Origin-Opener-Policy = "same-origin"
 
 # Static asset caching—grouped for brevity
 [[headers]]
 for = "*.js"
-  [headers.values]
-  Cache-Control = "public, max-age=604800, must-revalidate"
+[headers.values]
+Cache-Control = "public, max-age=604800, must-revalidate"
 [[headers]]
 for = "*.css"
-  [headers.values]
-  Cache-Control = "public, max-age=604800, must-revalidate"
+[headers.values]
+Cache-Control = "public, max-age=604800, must-revalidate"
 [[headers]]
 for = "*.svg"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.png"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.ico"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.jpg"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.jpeg"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.gif"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.webp"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.avif"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.mp4"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.webm"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.mp3"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.ogg"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.otf"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.eot"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.ttf"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.woff"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
 [[headers]]
 for = "*.woff2"
-  [headers.values]
-  Cache-Control = "public, max-age=604800"
+[headers.values]
+Cache-Control = "public, max-age=604800"
