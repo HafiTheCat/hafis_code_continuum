@@ -16,7 +16,67 @@ Strict-Transport-Security = "max-age=63072000; includeSubdomains; preload"
 # Frame & embedding
 X-Frame-Options = "DENY"
 # Content Security Policy (with reporting endpoint placeholder)
-Content-Security-Policy = """Content-Security-Policy: default-src 'self' https://hafis-code-continuum.netlify.app data: https:; base-uri 'self'; block-all-mixed-content; upgrade-insecure-requests; script-src 'self' https://hafis-code-continuum.netlify.app 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://hafis-code-continuum.netlify.app talk.hyvor.com cdn.cloudflare.com cdn.jsdelivr.net fonts.googleapis.com 'unsafe-inline' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-p08VBe6m5i8+qtXWjnH/AN3klt1l4uoOLsjNn8BjdQo='; img-src 'self' data: https://hafis-code-continuum.netlify.app talk.hyvor.com cdn.cloudflare.com; font-src 'self' https://hafis-code-continuum.netlify.app cdn.cloudflare.com cdn.jsdelivr.net fonts.gstatic.com; frame-src 'self' https://hafis-code-continuum.netlify.app www.youtube-nocookie.com player.vimeo.com streamable.com; media-src 'self' data: https://hafis-code-continuum.netlify.app cdn.cloudflare.com www.youtube-nocookie.com player.vimeo.com; object-src 'none'; manifest-src 'self' https://hafis-code-continuum.netlify.app; worker-src 'self' https://hafis-code-continuum.netlify.app; form-action 'self' https://hafis-code-continuum.netlify.app; frame-ancestors 'none'; report-uri /csp-report-endpoint"""
+
+
+[[headers]]
+for = "/*"
+[headers.values]
+Content-Security-Policy = """
+    default-src 'self' https://hafis-code-continuum.netlify.app data: https:;
+    base-uri 'self';
+    block-all-mixed-content;
+    upgrade-insecure-requests;
+
+    script-src      'self'
+                    https://hafis-code-continuum.netlify.app
+                    talk.hyvor.com
+                    https://gc.zgo.at
+                    'unsafe-inline'
+                    'unsafe-eval';
+    script-src-elem 'self'
+                    https://hafis-code-continuum.netlify.app
+                    talk.hyvor.com
+                    https://gc.zgo.at;
+
+    style-src       'self'
+                    https://hafis-code-continuum.netlify.app
+                    talk.hyvor.com
+                    cdn.cloudflare.com
+                    cdn.jsdelivr.net
+                    fonts.googleapis.com
+                    'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
+                    'sha256-p08VBe6m5i8+qtXWjnH/AN3klt1l4uoOLsjNn8BjdQo=';
+
+    img-src         'self'
+                    data:
+                    https://hafis-code-continuum.netlify.app
+                    talk.hyvor.com
+                    cdn.cloudflare.com;
+    font-src        'self'
+                    https://hafis-code-continuum.netlify.app
+                    cdn.cloudflare.com
+                    cdn.jsdelivr.net
+                    fonts.gstatic.com;
+    frame-src       'self'
+                    https://hafis-code-continuum.netlify.app
+                    www.youtube-nocookie.com
+                    player.vimeo.com
+                    streamable.com;
+    media-src       'self'
+                    data:
+                    https://hafis-code-continuum.netlify.app
+                    cdn.cloudflare.com
+                    www.youtube-nocookie.com
+                    player.vimeo.com;
+
+    object-src      'none';
+    manifest-src    'self' https://hafis-code-continuum.netlify.app;
+    worker-src      'self' https://hafis-code-continuum.netlify.app;
+    form-action     'self' https://hafis-code-continuum.netlify.app;
+    frame-ancestors 'none';
+
+    report-uri      /csp-report-endpoint
+  """
 # Referrer policy
 Referrer-Policy = "strict-origin-when-cross-origin"
 # Deprecated – removed in modern browsers (CSP covers XSS protection)
